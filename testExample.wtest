@@ -1,9 +1,23 @@
-import example.pepita
+import example.*
 
-describe "group of tests for pepita" {
+// Escribir los tests necesarios para probar la calificación otorgada por un pastelero. 
+// Se esperan tantos tests como clases de equivalencia, bien nombrados.
 
-  test "pepita has initial energy" {
-    assert.equals(100, pepita.energy())
+describe "Test para probar las calificaciones otorgadas por un pastelero" {
+  
+  const ezequiel = new Cocinero(especialidad = new EspecialidadPastelero(nivelDeseadoDeDulzor = 100))
+  test "Un pastelero califica correctamente un postre, sin pasarse del limite maximo del puntaje en la calificacion" {
+    const tiramisu = new Postre(cocinero = ezequiel, cantColores = 4)
+    assert.equals(6, ezequiel.calificacionPara(tiramisu))
   }
 
+  test "Un pastelero SIEMPRE va a califacar a una entrada con un puntaje igual a 0 (cero), debido a que no tiene azucar" {
+    const rabas = new Entrada(cocinero = ezequiel)
+    assert.equals(0, ezequiel.calificacionPara(rabas))
+  }
+
+  test "Un pastelero califica correctamente un plato principal, aplicando el limite maximo en el puntaje de la calificacion" {
+    const milanesaConPure = new Principal(cocinero = ezequiel, cantAzucar = 9999, esBonito = false)
+    assert.equals(10, ezequiel.calificacionPara(milanesaConPure)) // 10 es el maximo puntaje de califiacion!!
+  }
 }
